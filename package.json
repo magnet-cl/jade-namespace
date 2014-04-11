@@ -25,9 +25,9 @@
     "jade-web-assets": "./bin/jade-web-assets.js"
   },
   "dependencies": {
-    "commander": "2.1.0",
-    "mkdirp": "~0.3.5",
-    "jade": "~1.3"
+    "commander": "^2.1.0",
+    "mkdirp": "^0.3.5",
+    "jade": "^1.3"
   },
   "homepage": "https://github.com/magnet-cl/jade-web-assets"
 }
