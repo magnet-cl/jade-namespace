@@ -1,0 +1,30 @@
+{
+  "name": "jade-web-assets",
+  "version": "0.0.0",
+  "description": "A generator of javascript web-friendly files from jade templates",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/magnet-cl/jade-web-assets.git"
+  },
+  "keywords": [
+    "jade"
+  ],
+  "author": "Ignacio Munizaga",
+  "license": "Apache v2",
+  "bugs": {
+    "url": "https://github.com/magnet-cl/jade-web-assets/issues"
+  },
+  "bin": {
+    "jade-web-assets": "./bin/jade-web-assets.js"
+  },
+  "dependencies": {
+    "commander": "2.1.0",
+    "mkdirp": "~0.3.5",
+    "jade": "~1.3",
+  },
+  "homepage": "https://github.com/magnet-cl/jade-web-assets"
+}
