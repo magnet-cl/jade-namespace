@@ -13,7 +13,10 @@
   "keywords": [
     "jade"
   ],
-  "author": "Ignacio Munizaga",
+  "author": {
+    "name": "Ignacio Munizaga",
+    "email": "muni@magnet.cl"
+  },
   "license": "Apache v2",
   "bugs": {
     "url": "https://github.com/magnet-cl/jade-web-assets/issues"
