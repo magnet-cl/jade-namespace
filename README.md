@@ -1,4 +1,4 @@
-jade-web-assets
+jade-namespace
 ===============
 
 A generator of javascript web-friendly files from jade templates
@@ -6,7 +6,7 @@ A generator of javascript web-friendly files from jade templates
 ##Usage:
 
 running the command:
-    ./bin/jade-web-assets.js test.jade
+    ./bin/jade-namespace test.jade
 
 generates a javascript with the compiled javascript funcition within a
 namesapce
