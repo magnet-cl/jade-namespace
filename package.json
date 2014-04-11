@@ -1,6 +1,6 @@
 {
   "name": "jade-web-assets",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A generator of javascript web-friendly files from jade templates",
   "main": "index.js",
   "scripts": {

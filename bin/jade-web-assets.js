@@ -93,12 +93,13 @@ function renderFile(path) {
         options.filename = path;
         var output = jade.compileClient(str, options),
           extname = '.js',
+          templateName = path.replace(re, ''),
           outpath,
           dir;
 
         output = output.replace(' template', '');
         output = namespace + ' = ' + namespace + ' || {};' +
-          namespace + '=' + output + ';';
+          namespace + '[\'' + templateName + '\']=' + output + ';';
 
         if (program.out) {
           outPath = program.out;
