@@ -7,11 +7,8 @@
 var fs = require('fs'),
   program = require('commander'),
   path = require('path'),
-  basename = path.basename,
   dirname = path.dirname,
   resolve = path.resolve,
-  exists = fs.existsSync || path.existsSync,
-  join = path.join,
   mkdirp = require('mkdirp'),
   jade = require('jade');
 
@@ -25,10 +22,10 @@ program
   .version(require('../package.json').version)
   .usage('[options] [dir|file ...]')
   .option('-o, --out <path>', 'output the compiled html to <path>')
-  // TODO implement all the parameters bellow
   .option('-n, --namespace <str>', 'namespace where the templates are placed')
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-D, --debug', 'compile with debugging (bigger functions)')
+  .option('-r, --root <str>', 'used to trim the path of the template')
   .option('-P, --pretty', 'compile pretty html output');
 
 // javascript options
@@ -49,7 +46,7 @@ if (program.path) {
   options.filename = program.path;
 }
 
-// --no-debug
+// --debug
 
 options.compileDebug = !!program.debug;
 
@@ -74,26 +71,32 @@ if (files.length) {
 var namespace = program.namespace || 'jade';
 namespace = 'window.' + namespace;
 
+
+console.log(program.root);
+var root = program.root;
+
 /**
  * Process the given path, compiling the jade files found.
  * Always walk the subdirectories.
  */
-function renderFile(path) {
+function renderFile(templatePath) {
   var re = /\.jade$/;
-  fs.lstat(path, function(err, stat) {
+  fs.lstat(templatePath, function(err, stat) {
     if (err) throw err;
 
     // Found jade file
-    if (stat.isFile() && re.test(path)) {
-      fs.readFile(path, 'utf8', function(err, str) {
+    if (stat.isFile() && re.test(templatePath)) {
+      fs.readFile(templatePath, 'utf8', function(err, str) {
         if (err) {
           throw err;
         }
 
-        options.filename = path;
+        options.filename = templatePath;
+        console.log(root);
+        console.log(templatePath.replace(re, ''));
         var output = jade.compileClient(str, options),
           extname = '.js',
-          templateName = path.replace(re, ''),
+          templateName = path.relative(root, templatePath.replace(re, '')),
           outpath,
           dir;
 
@@ -104,17 +107,17 @@ function renderFile(path) {
         if (program.out) {
           outPath = program.out;
         } else {
-          outPath = path.replace(re, extname);
+          outPath = templatePath.replace(re, extname);
         }
 
-        dir = resolve(dirname(path));
+        dir = resolve(dirname(templatePath));
 
         mkdirp(dir, 0755, function(err) {
           if (err) throw err;
           try {
             fs.writeFile(outPath, output, function(err) {
               if (err) throw err;
-              console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+              console.log('  \033[90mrendered \033[36m%s\033[0m', templatePath);
             });
           } catch (e) {
             if (options.watch) {
@@ -127,10 +130,10 @@ function renderFile(path) {
       });
     // Found directory
     } else if (stat.isDirectory()) {
-      fs.readdir(path, function(err, files) {
+      fs.readdir(templatePath, function(err, files) {
         if (err) throw err;
         files.map(function(filename) {
-          return path + '/' + filename;
+          return templatePath + '/' + filename;
         }).forEach(renderFile);
       });
     }
