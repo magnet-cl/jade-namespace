@@ -26,6 +26,7 @@ program
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-D, --debug', 'compile with debugging (bigger functions)')
   .option('-r, --root <str>', 'used to trim the path of the template')
+  .option('-N, --name <str>', 'if defined, sets the name of the template')
   .option('-P, --pretty', 'compile pretty html output');
 
 // javascript options
@@ -92,9 +93,15 @@ function renderFile(templatePath) {
         options.filename = templatePath;
         var output = jade.compileClient(str, options),
           extname = '.js',
-          templateName = path.relative(root, templatePath.replace(re, '')),
+          templateName = templatePath.replace(re, ''),
           outpath,
           dir;
+
+        if (program.name) {
+          templateName = program.name;
+        } else {
+          templateName = path.relative(root, templateName);
+        }
 
         output = output.replace(' template', '');
         output = namespace + ' = ' + namespace + ' || {};' +
