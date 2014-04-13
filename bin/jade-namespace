@@ -71,9 +71,7 @@ if (files.length) {
 var namespace = program.namespace || 'jade';
 namespace = 'window.' + namespace;
 
-
-console.log(program.root);
-var root = program.root;
+var root = program.root || '';
 
 /**
  * Process the given path, compiling the jade files found.
@@ -92,8 +90,6 @@ function renderFile(templatePath) {
         }
 
         options.filename = templatePath;
-        console.log(root);
-        console.log(templatePath.replace(re, ''));
         var output = jade.compileClient(str, options),
           extname = '.js',
           templateName = path.relative(root, templatePath.replace(re, '')),
