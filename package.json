@@ -17,7 +17,7 @@
     "name": "Ignacio Munizaga",
     "email": "muni@magnet.cl"
   },
-  "license": "Apache v2",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/magnet-cl/jade-namespace/issues"
   },
